@@ -17,16 +17,13 @@ public class Scaler : MonoBehaviour
         _currentDirection = new Vector3(1, 1, 1);
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         transform.localScale += Math.Abs(_speed) * Time.deltaTime * _currentDirection;
 
-        if (Vector3.Distance(transform.localScale, _initialScale) > _maxScale)
+        if (Vector3Extensions.IsOutOfRange(transform.localScale, _initialScale, _maxScale))
         {
-            Vector3 newDirection = (transform.localScale - _initialScale).normalized;
-            newDirection.Scale(new Vector3(-1, -1, -1));
-
-            _currentDirection = newDirection;
+            _currentDirection *= -1;
         }
     }
 }

@@ -17,15 +17,13 @@ public class Mover : MonoBehaviour
         _currentDirection = transform.forward;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         transform.Translate(Math.Abs(_speed) * Time.deltaTime * _currentDirection);
 
-        if (Vector3.Distance(transform.position, _initialPosition) > _maxDistance)
+        if (Vector3Extensions.IsOutOfRange(transform.position, _initialPosition, _maxDistance))
         {
-            Vector3 newDirection = (transform.position - _initialPosition).normalized;
-            newDirection.Scale(new Vector3(-1, -1, -1));
-            _currentDirection = newDirection;
+            _currentDirection *= -1;
         }
     }
 }
